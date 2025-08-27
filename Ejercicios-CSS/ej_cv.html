@@ -3,15 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>CV Nombre Apellido</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="imagenes/favicon-standard.png">    
+    <style>
+        body{
+            text-align: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(to right, #1f1bff, #150046);
+        }
+
+        div{
+             border: 2px dashed #1f1bff;
+             margin: 10px;
+             padding: 5px 30px;
+             border-radius: 15px;
+             box-shadow: 10px 12px #619bcd;
+        }
+
+        #principal{
+         width: 50px;
+         float: left;
+         border-radius: 50%;
+        }
+
+        div.especial h3{
+        font-family: 'Bebas Neue';  
+        text-shadow: 10px 5px #619bcd;     
+         }
+    </style>
 </head>
 <body>
 
 <div>
+    <img id="principal"src="imagenes/icono_usuario.jpg" alt="icono_usuario">
     <h1>Nombre Alumno</h1>
     <h2>Ing. en Computacion</h2>
 </div>
 
-<div>
+<div class="especial">
     <h3>Datos Personales</h3>
     <p><span>Fecha de Nacimiento:</span> dd/mm/aaaa</p>
     <p><span>Email:</span> email@email.com</p>
