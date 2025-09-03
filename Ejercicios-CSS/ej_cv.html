@@ -10,6 +10,7 @@
             text-align: center;
             font-family: Arial, Helvetica, sans-serif;
             background: linear-gradient(to right, #1f1bff, #150046);
+            margin-top: 160px; 
         }
 
         div{
@@ -27,15 +28,27 @@
         }
 
         div.especial h3{
-        font-family: 'Bebas Neue';  
-        text-shadow: 10px 5px #619bcd;     
-         }
+            font-family: 'Bebas Neue';  
+            text-shadow: 10px 5px #619bcd;     
+        }
+
+        
+        #encabezado {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #150046;  
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
 
-<div>
-    <img id="principal"src="imagenes/icono_usuario.jpg" alt="icono_usuario">
+<div id="encabezado">
+    <img id="principal" src="imagenes/icono_usuario.jpg" alt="icono_usuario">
     <h1>Nombre Alumno</h1>
     <h2>Ing. en Computacion</h2>
 </div>
