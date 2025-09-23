@@ -45,3 +45,12 @@ function convertirGR(id){
     document.getElementById(elementid: "grados").value = grad;
     document.getElementById(elementid: "radianes").value = rad;
 }
+
+
+function mostrar_ocultar (valorMO){
+if (valorMO == "val_mostrar") {
+    document.getElementById(elementid: "valorMO").style.display = 'block'
+}else if(valorMO == "val_ocultar"){
+    document.getElementById(elementid: "valorMO").style.display = 'none';
+}
+}
