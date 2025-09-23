@@ -7,31 +7,47 @@
  */
 
 
-function cambiarUnidades (id, Valor){
-    if (isNaN(Valor)) {
-        alert("Se ingreso un valor incorrecto");
-        document.lasUnidades.unid_metro.value = "";
-        document.lasUnidades.unid_pulgada.value = "";
-        document.lasUnidades.unid_pie.value = "";
-        document.lasUnidades.unid_yarda.value = "";
-    }else if(id == "metro"){
-        document.lasUnidades.unid_pulgada.value = 39.3701*Valor;
-        document.lasUnidades.unid_pie.value = 3.28084*Valor;
-        document.lasUnidades.unid_yarda.value = 1.09361*Valor;
-    }else if(id == "pulgada"){
-        document.lasUnidades.unid_metro.value = 0.0254*Valor;
-        document.lasUnidades.unid_pie.value = 0.0833333*Valor;
-        document.lasUnidades.unid_yarda.value = 0.0277778*Valor;
-    }else if(id == "yarda"){
-        document.lasUnidades.unid_metro.value = 0.9144*Valor;
-        document.lasUnidades.unid_pie.value = 3*Valor;
-        document.lasUnidades.unid_pulgada.value = 36*Valor;
-    }else if(id == "pie"){
-        document.lasUnidades.unid_metro.value = 0.3047996952*Valor;
-        document.lasUnidades.unid_yarda.value = 0.333333*Valor;
-        document.lasUnidades.unid_pulgada.value = 12*Valor;
+function cambiarUnidades(id, Valor) {
+    // Convertir a número por si viene como string
+    Valor = Number(Valor);
+
+    let metro, pulgada, pie, yarda;
+    if (valor.includes(",")) {
+        valor = valor.replace(",",".");
     }
+
+    if (isNaN(Valor)) {
+        alert("Se ingresó un valor incorrecto en " + id);
+        metro = pulgada = pie = yarda = "";
+    } else if (id === "metro") {
+        metro   = Valor;
+        pulgada = 39.3701  * Valor;
+        pie     = 3.28084  * Valor;
+        yarda   = 1.09361  * Valor;
+    } else if (id === "pulgada") {
+        pulgada = Valor;
+        metro   = 0.0254   * Valor;
+        pie     = 0.0833333* Valor;
+        yarda   = 0.0277778* Valor;
+    } else if (id === "yarda") {
+        yarda   = Valor;
+        metro   = 0.9144   * Valor;
+        pie     = 3        * Valor;
+        pulgada = 36       * Valor;
+    } else if (id === "pie") {
+        pie     = Valor;
+        metro   = 0.3048   * Valor;
+        yarda   = 0.333333 * Valor;
+        pulgada = 12       * Valor;
+    }
+
+    // Actualizar los campos del formulario
+    document.lasUnidades.unid_metro.value   = Math.round(metro*100)/100;
+    document.lasUnidades.unid_pulgada.value = Math.round(pulgada*100)/100;
+    document.lasUnidades.unid_pie.value     = Math.round(pie*100)/100;
+    document.lasUnidades.unid_yarda.value   = Math.round(yarda*100)/100;
 }
+
 
 function convertirGR(id) {
     let grad, rad;
