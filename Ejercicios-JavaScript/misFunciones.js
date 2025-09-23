@@ -33,24 +33,59 @@ function cambiarUnidades (id, Valor){
     }
 }
 
-function convertirGR(id){
-    var grad, rad;
-    if (id =="grados") {
-        grad = document.getElementById(elementid: "grados").value;
-        rad = (grad*Math.PI)/180;
-    }else if(id == "radianes"){
-        rad = document.getElementById(elementid: "radianes").value;
-        grad = (rad*180)/Math.PI;
+function convertirGR(id) {
+    let grad, rad;
+
+    if (id === "grados") {
+        grad = Number(document.getElementById("grados").value);
+        rad  = (grad * Math.PI) / 180;
+    } else if (id === "radianes") {
+        rad  = Number(document.getElementById("radianes").value);
+        grad = (rad * 180) / Math.PI;
     }
-    document.getElementById(elementid: "grados").value = grad;
-    document.getElementById(elementid: "radianes").value = rad;
+
+    document.getElementById("grados").value   = grad;
+    document.getElementById("radianes").value = rad;
 }
 
+function mostrar_ocultar(valorMO) {
+    const div = document.getElementById("valorMO");
+    if (!div) {
+        console.error('Elemento con id "valorMO" no encontrado');
+        return;
+    }
 
-function mostrar_ocultar (valorMO){
-if (valorMO == "val_mostrar") {
-    document.getElementById(elementid: "valorMO").style.display = 'block'
-}else if(valorMO == "val_ocultar"){
-    document.getElementById(elementid: "valorMO").style.display = 'none';
+    if (valorMO === "val_mostrar") {
+        div.style.display = "block";
+    } else if (valorMO === "val_ocultar") {
+        div.style.display = "none";
+    }
 }
+
+function calcularSuma() {
+    num1 = Number(document.getElementsByName("sum_num1")[0].value);
+    num2 = Number(document.getElementsByName("sum_num2")[0].value);
+
+    document.getElementsByName("sum_total")[0].value = num1 + num2;
+}
+
+function calcularResta() {
+    num1 = Number(document.getElementsByName("res_num1")[0].value);
+    num2 = Number(document.getElementsByName("res_num2")[0].value);
+
+    document.getElementsByName("res_total")[0].value = num1 - num2;
+}
+
+function calcularMul() {
+    num1 = Number(document.getElementsByName("mul_num1")[0].value);
+    num2 = Number(document.getElementsByName("mul_num2")[0].value);
+
+    document.getElementsByName("mul_total")[0].value = num1*num2;
+}
+
+function calcularDiv() {
+    num1 = Number(document.getElementsByName("div_num1")[0].value);
+    num2 = Number(document.getElementsByName("div_num2")[0].value);
+
+    document.getElementsByName("div_total")[0].value = num1/num2;
 }
