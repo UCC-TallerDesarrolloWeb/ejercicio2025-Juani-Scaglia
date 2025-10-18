@@ -5,15 +5,16 @@
 
  <title>Catalogo de productos</title>
  <link  href="catalogo.css" type="text/css" rel="stylesheet">
- <script type="text/javascript" src="funciones.js"></script>
+ <script type="text/javascript" src="tienda.js"></script>
+
 </head>
-<body class="grid-container">
+<body class="grid-container" onload="cargarProductos()">
     <header class="item1">
      Catalogo de productos
     </header>
     <nav class="item2">
     <a href="productos.html">Catalago de productos</a>
-    <a href="productos.html">Carrito de compras</a>
+    <a href="carrito.html">Carrito de compras</a>
 
     </nav>
     <aside class="item3">
@@ -50,42 +51,16 @@
         </p>
       </fieldset>
      </Form>
-    </aside>
-    <main class="item4">
-      <dialog id="modal">
+    </aside> 
+    <dialog id="modal">
         <h2>Detalle del producto</h2>
-        <h3>Cabezal</h3>
-        <p>Cabezal de sparring. Disponible en talle del 1 al 3. En color rojo y azul.</p>
+        <h3 id="titulo-producto">Cabezal</h3>
+        <p id="descripcion-producto">Cabezal de sparring. Disponible en talle del 1 al 3. En color rojo y azul.</p>
       <button type="button" onclick="cerrarModal()">Cerrar</button>
-      
+    
       </dialog>
-        <div>
-            <img src="images/cabezal-cerrado.webp" alt="cabezal cerrado">
-          <h3>Cabezal</h3>
-          <button type="button" onclick="mostrarModal()">
-            Ver detalle del producto
-          </button>
-        </div>
-          <div>
-            <img src="images/foco-con-dedos.webp" alt="foco dedos">
-          <h3>Foco con Dedos</h3>
-        </div>
-          <div>
-            <img src="images/escudo-potencia.webp" alt="escudo potencia">
-          <h3>Escudo Potencia</h3>
-        </div>
-          <div>
-            <img src="images/protectores-manos.webp" alt="protectores manos">
-          <h3>Protectores manos</h3>
-        </div>
-          <div>
-            <img src="images/protectores-pie.webp" alt="preotectores pie">
-          <h3>Protectores pie</h3>
-        </div>
-          <div>
-            <img src="images/dobok.webp" alt="dobok">
-          <h3>Dobok</h3>
-        </div>
+
+    <main class="item4" id="mostrar-catalogo">
     </main>
     <footer class="item5">
      Contacto
