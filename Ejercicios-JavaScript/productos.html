@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+
+ <title>Catalogo de productos</title>
+ <link  href="catalogo.css" type="text/css" rel="stylesheet">
+ <script type="text/javascript" src="funciones.js"></script>
+</head>
+<body class="grid-container">
+    <header class="item1">
+     Catalogo de productos
+    </header>
+    <nav class="item2">
+    <a href="productos.html">Catalago de productos</a>
+    <a href="productos.html">Carrito de compras</a>
+
+    </nav>
+    <aside class="item3">
+     <Form name="filter">
+      <fieldset>
+        <legend>Busqueda</legend>
+        <label for="search">Buscar:</label>
+        <input type="text" id="search" name="search">
+      </fieldset>
+      <fieldset>
+        <legend>Precios</legend>
+        <p>
+        <label for="minimo">minimo</label>
+        <input type="number" id="minimo" name="min_number" min="0">
+        </p>
+        <p>
+          <label for="maximo">maximo</label>
+        <input type="number" id="maximo" name="max_number" max="100">
+        </p>
+      </fieldset>
+      <fieldset>
+        <legend>Tipo de productos</legend>
+        <p>
+        <input type="checkbox" name="tipo" id="protectores" value="protectores">
+        <label for="protectores">Protectores</label>
+        </p>
+        <p>
+          <input type="checkbox" id="entrenamiento" name="tipo" value="entrenamiento">
+          <label for="entrenamiento">Entrenamiento</label>
+        </p>
+        <p>
+          <input type="checkbox" id="dobok" name="tipo" value="dobok">
+          <label for="dobok">Dobok</label>
+        </p>
+      </fieldset>
+     </Form>
+    </aside>
+    <main class="item4">
+      <dialog id="modal">
+        <h2>Detalle del producto</h2>
+        <h3>Cabezal</h3>
+        <p>Cabezal de sparring. Disponible en talle del 1 al 3. En color rojo y azul.</p>
+      <button type="button" onclick="cerrarModal()">Cerrar</button>
+      
+      </dialog>
+        <div>
+            <img src="images/cabezal-cerrado.webp" alt="cabezal cerrado">
+          <h3>Cabezal</h3>
+          <button type="button" onclick="mostrarModal()">
+            Ver detalle del producto
+          </button>
+        </div>
+          <div>
+            <img src="images/foco-con-dedos.webp" alt="foco dedos">
+          <h3>Foco con Dedos</h3>
+        </div>
+          <div>
+            <img src="images/escudo-potencia.webp" alt="escudo potencia">
+          <h3>Escudo Potencia</h3>
+        </div>
+          <div>
+            <img src="images/protectores-manos.webp" alt="protectores manos">
+          <h3>Protectores manos</h3>
+        </div>
+          <div>
+            <img src="images/protectores-pie.webp" alt="preotectores pie">
+          <h3>Protectores pie</h3>
+        </div>
+          <div>
+            <img src="images/dobok.webp" alt="dobok">
+          <h3>Dobok</h3>
+        </div>
+    </main>
+    <footer class="item5">
+     Contacto
+    </footer>
+</body>
+</html>
