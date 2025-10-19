@@ -64,11 +64,14 @@ const productos = [
 
 let cargarProductos = (prod = productos) => {
   let contenido = "";
-  prod.forEach((elemento, id) => {
+  prod.forEach((elemento) => {
+    // ✅ Buscar el índice real del producto dentro del array original
+    const id = productos.findIndex((p) => p.nombre === elemento.nombre);
+
     contenido += `<div>
       <img src="images/${elemento.imagen}" alt="${elemento.nombre}"/>
       <h3>${elemento.nombre}</h3>
-      <p>${elemento.precio}</p>
+      <p>${formatPrice(elemento.precio)}</p>
       <button type="button" onclick="mostrarModal(${id})">
         Ver detalle del producto
       </button>
@@ -91,6 +94,7 @@ let agregarAlcarrito = (id) => {
   carritoList.push(id);
   localStorage.setItem("carrito", JSON.stringify(carritoList));
   console.log(carritoList);
+  contarProductos();
 };
 
 let cargarCarrito = () => {
@@ -102,9 +106,10 @@ let cargarCarrito = () => {
   } else {
     carritoList = JSON.parse(carritoList);
     carritoList.forEach((num, id) => {
+      // ✅ Corregido: usar productos[num] en lugar de elemento
       contenido += `<div>
         <h3>${productos[num].nombre}</h3>
-        <p>${productos[num].precio}</p>
+        <p>${formatPrice(productos[num].precio)}</p>
         <button type="button" onclick="eliminarProducto(${id})">Eliminar Producto</button>
       </div>`;
     });
@@ -117,6 +122,7 @@ let cargarCarrito = () => {
 let vaciarCarrito = () => {
   localStorage.removeItem("carrito");
   window.location.reload();
+  contarProductos();
 };
 
 let eliminarProducto = (id) => {
@@ -131,6 +137,7 @@ let eliminarProducto = (id) => {
   }
 
   window.location.reload();
+  contarProductos();
 };
 
 let mostrarModal = (id) => {
@@ -156,30 +163,53 @@ let filtrarProductos = () => {
   let newLista = productos;
 
   if (searchWord) {
-    newLista = newLista.filter((prod) => prod.nombre == prod.nombre.toLowerCase().includes(searchWord.toLowerCase()) ||
-    prod.description.toLowerCase().includes(searchWord.toLowerCase()));
-
-  }
-  
-  if(min){
-   newLista = newLista.filter((prod) => prod.precio >= min);
-  }
-
-   if(max){
-   newLista = newLista.filter((prod) => prod.precio <= max);
+    newLista = newLista.filter(
+      (prod) =>
+        prod.nombre
+          .toLowerCase()
+          .includes(searchWord.toLowerCase()) ||
+        prod.description
+          .toLowerCase()
+          .includes(searchWord.toLowerCase())
+    );
   }
 
-  if(marca !== "Todas"){
-  newLista = newLista.filter((prod) => prod.marca === marca)
+  if (min) {
+    newLista = newLista.filter((prod) => prod.precio >= min);
+  }
+
+  if (max) {
+    newLista = newLista.filter((prod) => prod.precio <= max);
+  }
+
+  if (marca !== "Todas") {
+    newLista = newLista.filter((prod) => prod.marca === marca);
   }
 
   let categoria = [];
-  prot ? categoria.push("Protectores"): "";
-  entr ? categoria.push("Entrenamiento"): "";
-  dob ? categoria.push("Dobok"): "";
+  if (prot) categoria.push("Protectores");
+  if (entr) categoria.push("Entrenamiento");
+  if (dob) categoria.push("Dobok");
 
-  if(categoria.length > 0){
-  newLista = newLista.filter((prod) => categoria.includes(prod.categoria));
+  if (categoria.length > 0) {
+    newLista = newLista.filter((prod) => categoria.includes(prod.categoria));
   }
+
   cargarProductos(newLista);
+};
+
+let formatPrice = (price) => {
+  return new Intl.NumberFormat("es-AR", {
+    currency: "ARS",
+    style: "currency",
+  }).format(price);
+};
+
+let contarProductos = () => {
+  const getCart = JSON.parse(localStorage.getItem("carrito"));
+  if (getCart != null) {
+    document.getElementById("cant-prod").innerText = getCart.length;
+  } else {
+    document.getElementById("cant-prod").innerText = 0;
+  }
 };
