@@ -65,9 +65,7 @@ const productos = [
 let cargarProductos = (prod = productos) => {
   let contenido = "";
   prod.forEach((elemento) => {
-    // ✅ Buscar el índice real del producto dentro del array original
     const id = productos.findIndex((p) => p.nombre === elemento.nombre);
-
     contenido += `<div>
       <img src="images/${elemento.imagen}" alt="${elemento.nombre}"/>
       <h3>${elemento.nombre}</h3>
@@ -80,7 +78,6 @@ let cargarProductos = (prod = productos) => {
       </button>
     </div>`;
   });
-
   document.getElementById("mostrar-catalogo").innerHTML = contenido;
 };
 
@@ -93,29 +90,42 @@ let agregarAlcarrito = (id) => {
   }
   carritoList.push(id);
   localStorage.setItem("carrito", JSON.stringify(carritoList));
-  console.log(carritoList);
   contarProductos();
 };
 
 let cargarCarrito = () => {
   let carritoList = localStorage.getItem("carrito");
   let contenido = "";
+  let total = 0;
 
   if (carritoList == null) {
     contenido = "<div>Su carrito está vacío</div>";
   } else {
     carritoList = JSON.parse(carritoList);
-    carritoList.forEach((num, id) => {
-      // ✅ Corregido: usar productos[num] en lugar de elemento
-      contenido += `<div>
-        <h3>${productos[num].nombre}</h3>
-        <p>${formatPrice(productos[num].precio)}</p>
-        <button type="button" onclick="eliminarProducto(${id})">Eliminar Producto</button>
-      </div>`;
+    const listProd = [];
+    const listCant = [];
+    carritoList.forEach((num) => {
+      if (!listProd.includes(num)) {
+        listProd.push(num);
+        listCant.push(1);
+      } else {
+        const inx = listProd.indexOf(num);
+        listCant[inx] += 1;
+      }
     });
+    listProd.forEach((num, id) => {
+      const element = productos[num];
+      contenido += `<div>
+        <h3>${element.nombre}</h3>
+        <p>${formatPrice(element.precio)}</p>
+        <p>Cantidad: ${listCant[id]}</p>
+        <button type="button" onclick="eliminarProducto(${num})">Eliminar Producto</button>
+      </div>`;
+      total += element.precio * listCant[id];
+    });
+    contenido += `<h3>Total: ${formatPrice(total)}</h3>`;
     contenido += `<button type="button" onclick="vaciarCarrito()">Vaciar carrito</button>`;
   }
-
   document.getElementById("mostrar-carrito").innerHTML = contenido;
 };
 
@@ -128,14 +138,13 @@ let vaciarCarrito = () => {
 let eliminarProducto = (id) => {
   let carritoList = localStorage.getItem("carrito");
   carritoList = JSON.parse(carritoList);
-  carritoList.splice(id, 1);
-
+  const index = carritoList.indexOf(id);
+  if (index !== -1) carritoList.splice(index, 1);
   if (carritoList.length > 0) {
     localStorage.setItem("carrito", JSON.stringify(carritoList));
   } else {
     localStorage.removeItem("carrito");
   }
-
   window.location.reload();
   contarProductos();
 };
@@ -159,42 +168,30 @@ let filtrarProductos = () => {
   let prot = document.getElementById("protectores").checked;
   let entr = document.getElementById("entrenamiento").checked;
   let dob = document.getElementById("dobok").checked;
-
   let newLista = productos;
-
   if (searchWord) {
     newLista = newLista.filter(
       (prod) =>
-        prod.nombre
-          .toLowerCase()
-          .includes(searchWord.toLowerCase()) ||
-        prod.description
-          .toLowerCase()
-          .includes(searchWord.toLowerCase())
+        prod.nombre.toLowerCase().includes(searchWord.toLowerCase()) ||
+        prod.description.toLowerCase().includes(searchWord.toLowerCase())
     );
   }
-
   if (min) {
     newLista = newLista.filter((prod) => prod.precio >= min);
   }
-
   if (max) {
     newLista = newLista.filter((prod) => prod.precio <= max);
   }
-
   if (marca !== "Todas") {
     newLista = newLista.filter((prod) => prod.marca === marca);
   }
-
   let categoria = [];
   if (prot) categoria.push("Protectores");
   if (entr) categoria.push("Entrenamiento");
   if (dob) categoria.push("Dobok");
-
   if (categoria.length > 0) {
     newLista = newLista.filter((prod) => categoria.includes(prod.categoria));
   }
-
   cargarProductos(newLista);
 };
 
