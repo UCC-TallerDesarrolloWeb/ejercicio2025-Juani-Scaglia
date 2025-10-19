@@ -62,26 +62,25 @@ const productos = [
   },
 ];
 
-
-let cargarProductos = () => {
+let cargarProductos = (prod = productos) => {
   let contenido = "";
-  productos.forEach((elemento, id) => {
-contenido += `<div>
-<img src="images/${elemento.imagen}" alt="${elemento.nombre}"/>
-<h3>${elemento.nombre}</h3>
-<p>${elemento.precio}</p>
-<button type="button" onclick="mostrarModal(${id})">
- Ver detalle del producto
-</button>
-<button type="button" onclick="agregarAlcarrito(${id})">
-Agregar al carrito
-</button>
-</div>`;
-  })
+  prod.forEach((elemento, id) => {
+    contenido += `<div>
+      <img src="images/${elemento.imagen}" alt="${elemento.nombre}"/>
+      <h3>${elemento.nombre}</h3>
+      <p>${elemento.precio}</p>
+      <button type="button" onclick="mostrarModal(${id})">
+        Ver detalle del producto
+      </button>
+      <button type="button" onclick="agregarAlcarrito(${id})">
+        Agregar al carrito
+      </button>
+    </div>`;
+  });
 
   document.getElementById("mostrar-catalogo").innerHTML = contenido;
-
 };
+
 let agregarAlcarrito = (id) => {
   let carritoList = localStorage.getItem("carrito");
   if (carritoList == null) {
@@ -109,9 +108,9 @@ let cargarCarrito = () => {
         <button type="button" onclick="eliminarProducto(${id})">Eliminar Producto</button>
       </div>`;
     });
-contenido += `<button type="button" onclick="vaciarCarrito()">Vaciar carrito</button>`;
-
+    contenido += `<button type="button" onclick="vaciarCarrito()">Vaciar carrito</button>`;
   }
+
   document.getElementById("mostrar-carrito").innerHTML = contenido;
 };
 
@@ -120,28 +119,67 @@ let vaciarCarrito = () => {
   window.location.reload();
 };
 
-let eliminarProducto = (id) =>{
+let eliminarProducto = (id) => {
   let carritoList = localStorage.getItem("carrito");
   carritoList = JSON.parse(carritoList);
-  carritoList.splice(id,1);
+  carritoList.splice(id, 1);
 
-  if(carritoList.lengh>0){
+  if (carritoList.length > 0) {
     localStorage.setItem("carrito", JSON.stringify(carritoList));
-  }
-  else{
+  } else {
     localStorage.removeItem("carrito");
   }
-  localStorage.setItem("carrito", JSON.stringify(carritoList));
 
   window.location.reload();
 };
 
 let mostrarModal = (id) => {
-document.getElementById("titulo-producto").innerText = productos[id].nombre;
-document.getElementById("descripcion-producto").innerText = productos[id].description;
-document.getElementById("modal").style.display = "block";
-};
-let cerrarModal = () => {
-document.getElementById("modal").style.display = "none";
+  document.getElementById("titulo-producto").innerText = productos[id].nombre;
+  document.getElementById("descripcion-producto").innerText =
+    productos[id].description;
+  document.getElementById("modal").style.display = "block";
 };
 
+let cerrarModal = () => {
+  document.getElementById("modal").style.display = "none";
+};
+
+let filtrarProductos = () => {
+  let searchWord = document.getElementById("search").value;
+  let min = document.getElementById("minimo").value;
+  let max = document.getElementById("maximo").value;
+  let marca = document.getElementById("marca").value;
+  let prot = document.getElementById("protectores").checked;
+  let entr = document.getElementById("entrenamiento").checked;
+  let dob = document.getElementById("dobok").checked;
+
+  let newLista = productos;
+
+  if (searchWord) {
+    newLista = newLista.filter((prod) => prod.nombre == prod.nombre.toLowerCase().includes(searchWord.toLowerCase()) ||
+    prod.description.toLowerCase().includes(searchWord.toLowerCase()));
+
+  }
+  
+  if(min){
+   newLista = newLista.filter((prod) => prod.precio >= min);
+  }
+
+   if(max){
+   newLista = newLista.filter((prod) => prod.precio <= max);
+  }
+
+  if(marca !== "Todas"){
+  newLista = newLista.filter((prod) => prod.marca === marca)
+  }
+
+  let categoria = [];
+  prot ? categoria.push("Protectores"): "";
+  entr ? categoria.push("Entrenamiento"): "";
+  dob ? categoria.push("Dobok"): "";
+
+  if(categoria.length > 0){
+  newLista = newLista.filter((prod) => categoria.includes(prod.categoria));
+  }
+  cargarProductos(newLista);
+};
