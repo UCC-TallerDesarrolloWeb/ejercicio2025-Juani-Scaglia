@@ -8,10 +8,17 @@
 
 
 function cambiarUnidades(id, Valor) {
+
+        
+    if (String(Valor).includes(",")) {
+  Valor = Number(String(Valor).replaceAll(",", "."));
+}
+
     // Convertir a número por si viene como string
     Valor = Number(Valor);
 
     let metro, pulgada, pie, yarda;
+
    
     if (isNaN(Valor)) {
         alert("Se ingresó un valor incorrecto en " + id);
