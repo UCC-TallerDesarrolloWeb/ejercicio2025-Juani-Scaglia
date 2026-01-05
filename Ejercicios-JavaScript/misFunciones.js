@@ -12,10 +12,7 @@ function cambiarUnidades(id, Valor) {
     Valor = Number(Valor);
 
     let metro, pulgada, pie, yarda;
-    if (valor.includes(",")) {
-        valor = valor.replace(",",".");
-    }
-
+   
     if (isNaN(Valor)) {
         alert("Se ingresó un valor incorrecto en " + id);
         metro = pulgada = pie = yarda = "";
