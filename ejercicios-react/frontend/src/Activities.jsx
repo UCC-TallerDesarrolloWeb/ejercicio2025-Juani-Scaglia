@@ -21,6 +21,10 @@ const Activities = [
 ];
 
 const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
+const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+
 const handleInscription = (nombreActividad) => {
     alert(`Inscripto en ${nombreActividad}`);
 }
@@ -37,7 +41,10 @@ return(
                         </li>
                     ))}
                 </ul>
+                {
+                    isLoggedIn &&(
                 <button onClick={() => handleInscription(activity.nombre)}> Inscribir </button>
+                )}
             </div>
          ))}
     </div>
